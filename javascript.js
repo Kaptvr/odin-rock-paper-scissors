@@ -65,11 +65,35 @@ function pickWinner (playerScore, computerScore)
 
 function game ()
 {
-  const buttons = document.querySelector('.buttons');
-  const computerChoice = getComputerChoice();
-  buttons.addEventListener('click', (e => {
-    alert(playRound(computerChoice, e.target.className))
-  }));
+  const result = document.querySelector('.result');
+  const playerScoreDiv = document.querySelector('.playerScore');
+  const computerScoreDiv = document.querySelector('.computerScore');
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.addEventListener('click', e => {
+      const computerChoice = getComputerChoice();
+      let roundResult = (playRound(computerChoice, e.target.className)); //
+      result.textContent = roundResult;
+      playerScoreDiv.textContent = `Your score: ${playerScore}`;
+      computerScoreDiv.textContent = `Computer score: ${computerScore}`;
+      if (playerScore === 5 || computerScore === 5) {
+        displayResult();
+        buttons.forEach(button => {
+          button.setAttribute('disabled', true);
+        })}})});
+}
+
+function displayResult () {
+  const endResult = document.querySelector('.endResult');
+  if (computerScore === 5) {
+    endResult.textContent = 'Computer wins!';
+  }
+  else {
+    endResult.textContent = 'You win!';
+  }
 }
 
 game ();
+
+
+
