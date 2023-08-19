@@ -3,15 +3,15 @@ function getComputerChoice ()
   let choice = Math.floor(Math.random() * 3);
   if (choice === 0)
   {
-    return "Rock";
+    return "rock";
   }
   else if (choice === 1)
   {
-    return "Paper";
+    return "paper";
   }
   else
   {
-    return "Scissors";
+    return "scissors";
   }
 }
 
@@ -20,23 +20,23 @@ let computerScore = 0;
 
 function playRound (computerSelection, playerSelection)
 {
-  playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
+  playerSelection = playerSelection.toLowerCase();
 
 
   if (computerSelection === playerSelection)
   {
     return "It's a Tie";
   }
-  else if (computerSelection === "Rock" && playerSelection === "Scissors" ||
-          computerSelection === "Paper" && playerSelection === "Rock" ||
-          computerSelection === "Scissors" && playerSelection === "Paper")
+  else if (computerSelection === "rock" && playerSelection === "scissors" ||
+          computerSelection === "paper" && playerSelection === "rock" ||
+          computerSelection === "scissors" && playerSelection === "paper")
   {
     computerScore++;
     return `You Lose! ${computerSelection} beats ${playerSelection}`;
   }
-  else if (playerSelection === "Rock" && computerSelection === "Scissors" ||
-          playerSelection === "Paper" && computerSelection === "Rock" ||
-          playerSelection === "Scissors" && computerSelection === "Paper")
+  else if (playerSelection === "rock" && computerSelection === "scissors" ||
+          playerSelection === "paper" && computerSelection === "rock" ||
+          playerSelection === "scissors" && computerSelection === "paper")
   {
     playerScore++;
     return `You Win! ${playerSelection} beats ${computerSelection}`;
@@ -65,21 +65,11 @@ function pickWinner (playerScore, computerScore)
 
 function game ()
 {
-  for (let i = 0; i < 5; i++)
-  {
-    const computerChoice = getComputerChoice();
-    const playerChoice = prompt(`(Round ${i+1} out of 5) Choose Rock Paper or Scissors`);
-
-    let verdict = playRound(computerChoice, playerChoice);
-    console.log(verdict);
-
-    if (verdict === "Invalid choice")
-    {
-      i--;
-    }
-  }
-
-  console.log(pickWinner(playerScore, computerScore));
+  const buttons = document.querySelector('.buttons');
+  const computerChoice = getComputerChoice();
+  buttons.addEventListener('click', (e => {
+    alert(playRound(computerChoice, e.target.className))
+  }));
 }
 
 game ();
